@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fake-backend
+  template:
+    metadata:
+      labels:
+        app: fake-backend
+    spec:
+      containers:
+        - name: fake-backend
+          image: normat/fake-backend
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake-backend
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30000
+  selector:
+    app: fake-backend

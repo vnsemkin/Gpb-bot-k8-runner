@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: middle-service-config
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  spring.datasource.username: "postgres"
+  spring.datasource.password: "postgres"
+  spring.flyway.user: "postgres"
+  spring.flyway.password: "postgres"
+  spring.flyway.url: "jdbc:postgresql://gpb-postgres:5432/gpb"
+  spring.flyway.locations: "classpath:db/migration"
+  spring.flyway.enabled: "true"

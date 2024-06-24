@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegram-bot-config
+data:
+  TELEGRAM_GPB_BOT_TOKEN: "${TELEGRAM_GPB_BOT_TOKEN}"
+  SPRING_PROFILES_ACTIVE: "docker"

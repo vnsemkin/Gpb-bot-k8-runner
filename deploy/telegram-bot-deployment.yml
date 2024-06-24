@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-bot
+  template:
+    metadata:
+      labels:
+        app: telegram-bot
+    spec:
+      containers:
+        - name: telegram-bot
+          image: normat/telegram-bot:latest
+          env:
+            - name: TELEGRAM_GPB_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-bot-secrets
+                  key: TELEGRAM_GPB_BOT_TOKEN
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+          ports:
+            - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telegram-bot
+spec:
+  type: NodePort
+  ports:
+    - port: 8081
+      nodePort: 30001
+  selector:
+    app: telegram-bot
