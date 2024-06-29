@@ -22,7 +22,7 @@ spec:
                   name: telegram-bot-secrets
                   key: TELEGRAM_GPB_BOT_TOKEN
             - name: SPRING_PROFILES_ACTIVE
-              value: docker
+              value: k8s
           ports:
             - containerPort: 8081
 ---

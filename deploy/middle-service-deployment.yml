@@ -17,7 +17,7 @@ spec:
           image: normat/middle-service:latest
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: docker
+              value: k8s
             - name: spring.datasource.username
               valueFrom:
                 secretKeyRef:
