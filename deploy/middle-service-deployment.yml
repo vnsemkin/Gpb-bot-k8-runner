@@ -23,6 +23,8 @@ spec:
                 secretKeyRef:
                   name: postgres-secrets
                   key: POSTGRES_USER
+            - name: spring.datasource.url
+              value: jdbc:postgresql://gpb-postgres:5432/gpb
             - name: spring.datasource.password
               valueFrom:
                 secretKeyRef:
