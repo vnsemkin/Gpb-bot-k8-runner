@@ -11,3 +11,4 @@ data:
   spring.flyway.url: "jdbc:postgresql://gpb-postgres:5432/gpb"
   spring.flyway.locations: "classpath:db/migration"
   spring.flyway.enabled: "true"
+  backend.base-url: "http://fake-backend:8080"

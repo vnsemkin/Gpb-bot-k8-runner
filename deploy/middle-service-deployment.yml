@@ -46,6 +46,8 @@ spec:
               value: classpath:db/migration
             - name: spring.flyway.enabled
               value: "true"
+            - name: backend.base-url
+              value: http://fake-backend:8080
           ports:
             - containerPort: 8082
 ---
