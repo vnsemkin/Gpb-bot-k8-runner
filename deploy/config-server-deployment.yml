@@ -9,6 +9,10 @@ spec:
       app: config-server
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8099"
       labels:
         app: config-server
     spec:
