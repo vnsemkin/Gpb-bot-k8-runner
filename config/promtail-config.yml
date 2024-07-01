@@ -3,22 +3,24 @@ server:
   grpc_listen_port: 0
 
 positions:
-  filename: /var/log/positions.yaml
+  filename: /tmp/positions.yaml
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://loki.default.svc.cluster.local:3100/loki/api/v1/push
 
 scrape_configs:
-  - job_name: kubernetes-pods
-    kubernetes_sd_configs:
-      - role: pod
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: telegram-bot
-      - source_labels: [__meta_kubernetes_namespace]
-        target_label: namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        target_label: pod
-      - source_labels: [__meta_kubernetes_pod_container_name]
-        target_label: container
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*log
+
+  - job_name: microservices
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: microservices
+          __path__: /var/lib/docker/containers/*/*-json.log
