@@ -9,10 +9,6 @@ spec:
       app: telegram-bot
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "8081"
       labels:
         app: telegram-bot
     spec:
@@ -33,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: telegram-bot
+  name: telegram-bot-service
 spec:
   type: NodePort
   ports:
@@ -41,3 +37,15 @@ spec:
       nodePort: 30001
   selector:
     app: telegram-bot
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: telegram-bot-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: telegram-bot
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"

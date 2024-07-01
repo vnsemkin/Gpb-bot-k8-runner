@@ -9,10 +9,6 @@ spec:
       app: middle-service
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "8082"
       labels:
         app: middle-service
     spec:
@@ -58,7 +54,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: middle-service
+  name: middle-service-service
 spec:
   type: NodePort
   ports:
@@ -66,3 +62,15 @@ spec:
       nodePort: 30002
   selector:
     app: middle-service
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: middle-service-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: middle-service
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"

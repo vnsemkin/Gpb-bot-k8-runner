@@ -9,10 +9,6 @@ spec:
       app: fake-backend
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "8080"
       labels:
         app: fake-backend
     spec:
@@ -25,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake-backend
+  name: fake-backend-service
 spec:
   type: NodePort
   ports:
@@ -33,3 +29,15 @@ spec:
       nodePort: 30000
   selector:
     app: fake-backend
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fake-backend-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: fake-backend
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"

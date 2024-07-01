@@ -9,10 +9,6 @@ spec:
       app: config-server
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "8099"
       labels:
         app: config-server
     spec:
@@ -25,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server
+  name: config-server-service
 spec:
   type: NodePort
   ports:
@@ -33,3 +29,15 @@ spec:
       nodePort: 30099
   selector:
     app: config-server
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: config-server-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: config-server
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"
