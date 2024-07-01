@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: telegram-bot-monitor
+  labels:
+    app: telegram-bot
+spec:
+  selector:
+    matchLabels:
+      app: telegram-bot
+  endpoints:
+    - port: "8081"
+      path: "/actuator/prometheus"
