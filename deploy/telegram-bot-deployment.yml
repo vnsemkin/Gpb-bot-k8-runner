@@ -29,23 +29,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: telegram-bot-service
+  name: telegram-bot-svc
+  annotations:
+    prometheus.io/path: "/actuator/prometheus"
+    prometheus.io/port: "8081"
+    prometheus.io/scrape: "true"
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 8081
-      nodePort: 30001
+    - name: http
+      port: 8081
+      targetPort: 8081
   selector:
     app: telegram-bot
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: telegram-bot-service-monitor
-spec:
-  selector:
-    matchLabels:
-      app: telegram-bot
-  endpoints:
-    - port: http-traffic
-      path: "/actuator/prometheus"

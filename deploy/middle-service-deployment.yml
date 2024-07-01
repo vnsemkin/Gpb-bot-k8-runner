@@ -54,23 +54,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: middle-service-service
+  name: middle-service-svc
+  annotations:
+    prometheus.io/path: "/actuator/prometheus"
+    prometheus.io/port: "8082"
+    prometheus.io/scrape: "true"
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 8082
-      nodePort: 30002
+    - name: http
+      port: 8082
+      targetPort: 8082
   selector:
     app: middle-service
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: middle-service-service-monitor
-spec:
-  selector:
-    matchLabels:
-      app: middle-service
-  endpoints:
-    - port: http-traffic
-      path: "/actuator/prometheus"
