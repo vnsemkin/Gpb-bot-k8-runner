@@ -1,0 +1,30 @@
+scrape_configs:
+  - job_name: 'telegram-bot'
+    static_configs:
+      - targets: ['telegram-bot.default.svc.cluster.local:8081']
+        labels:
+          service: 'telegram-bot'
+
+  - job_name: 'middle-service'
+    static_configs:
+      - targets: ['middle-service.default.svc.cluster.local:8082']
+        labels:
+          service: 'middle-service'
+
+  - job_name: 'fake-backend'
+    static_configs:
+      - targets: ['fake-backend.default.svc.cluster.local:8080']
+        labels:
+          service: 'fake-backend'
+
+  - job_name: 'gpb-postgres'
+    static_configs:
+      - targets: ['gpb-postgres.default.svc.cluster.local:5432']
+        labels:
+          service: 'gpb-postgres'
+
+  - job_name: 'config-server'
+    static_configs:
+      - targets: ['config-server.default.svc.cluster.local:8099']
+        labels:
+          service: 'config-server'
