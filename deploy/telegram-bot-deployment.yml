@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: telegram-bot
+      annotations:
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8081"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: telegram-bot

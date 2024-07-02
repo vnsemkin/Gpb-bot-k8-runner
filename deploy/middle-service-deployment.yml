@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: middle-service
+      annotations:
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8082"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: middle-service

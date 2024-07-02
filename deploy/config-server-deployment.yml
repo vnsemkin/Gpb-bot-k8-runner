@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: config-server
+      annotations:
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8099"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: config-server
