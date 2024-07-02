@@ -50,6 +50,7 @@ metadata:
   name: fake-backend-service-monitor
   labels:
     app: fake-backend
+    release: prometheus
 spec:
   selector:
     matchLabels:

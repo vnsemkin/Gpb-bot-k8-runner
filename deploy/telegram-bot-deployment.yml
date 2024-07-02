@@ -58,6 +58,7 @@ metadata:
   name: telegram-bot-service-monitor
   labels:
     app: telegram-bot
+    release: prometheus
 spec:
   selector:
     matchLabels:

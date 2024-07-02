@@ -50,6 +50,7 @@ metadata:
   name: config-server-service-monitor
   labels:
     app: config-server
+    release: prometheus
 spec:
   selector:
     matchLabels:
