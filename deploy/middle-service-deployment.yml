@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: middle-service
+  labels:
+    app: middle-service
 spec:
   replicas: 1
   selector:
@@ -79,6 +81,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: middle-service-service-monitor
+  labels:
+    app: middle-service
 spec:
   selector:
     matchLabels:
@@ -86,3 +90,5 @@ spec:
   endpoints:
     - port: http-traffic
       path: "/actuator/prometheus"
+      interval: 30s  # Specify the scrape interval
+      scrapeTimeout: 10s  # Specify the scrape timeout

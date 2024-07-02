@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: telegram-bot
+  labels:
+    app: telegram-bot
 spec:
   replicas: 1
   selector:
@@ -54,6 +56,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: telegram-bot-service-monitor
+  labels:
+    app: telegram-bot
 spec:
   selector:
     matchLabels:
@@ -61,3 +65,5 @@ spec:
   endpoints:
     - port: http-traffic
       path: "/actuator/prometheus"
+      interval: 30s  # Specify the scrape interval
+      scrapeTimeout: 10s  # Specify the scrape timeout

@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fake-backend
+  labels:
+    app: fake-backend
 spec:
   replicas: 1
   selector:
@@ -46,6 +48,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: fake-backend-service-monitor
+  labels:
+    app: fake-backend
 spec:
   selector:
     matchLabels:
@@ -53,3 +57,5 @@ spec:
   endpoints:
     - port: http-traffic
       path: "/actuator/prometheus"
+      interval: 30s  # Specify the scrape interval
+      scrapeTimeout: 10s  # Specify the scrape timeout
