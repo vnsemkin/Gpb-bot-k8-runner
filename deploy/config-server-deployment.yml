@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server-service
+  name: config-server
   labels:
     app: config-server
   annotations:
@@ -47,7 +47,7 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: config-server-service-monitor
+  name: config-server-monitor
   labels:
     app: config-server
     release: prometheus

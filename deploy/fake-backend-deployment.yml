@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake-backend-service
+  name: fake-backend
   labels:
     app: fake-backend
   annotations:
@@ -47,7 +47,7 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: fake-backend-service-monitor
+  name: fake-backend-monitor
   labels:
     app: fake-backend
     release: prometheus
