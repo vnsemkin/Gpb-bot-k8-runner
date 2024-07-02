@@ -21,16 +21,31 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server-svc
+  name: config-server-service
+  labels:
+    app: config-server
   annotations:
     prometheus.io/path: "/actuator/prometheus"
     prometheus.io/port: "8099"
     prometheus.io/scrape: "true"
 spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8099
-      targetPort: 8099
   selector:
     app: config-server
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: http-traffic
+      port: 8099
+      targetPort: 8099
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: config-server-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: config-server
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"

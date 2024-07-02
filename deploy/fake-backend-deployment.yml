@@ -21,16 +21,31 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake-backend-svc
+  name: fake-backend-service
+  labels:
+    app: fake-backend
   annotations:
     prometheus.io/path: "/actuator/prometheus"
     prometheus.io/port: "8080"
     prometheus.io/scrape: "true"
 spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8080
-      targetPort: 8080
   selector:
     app: fake-backend
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: http-traffic
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fake-backend-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: fake-backend
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"
